@@ -352,6 +352,11 @@ if ( ! class_exists( 'Tribe__Events__API' ) ) {
 			}
 
 			if ( empty( $data['EventTimezoneAbbr'] ) ) {
+				write_log( $event_id, 'Event ID' );
+				write_log( $data['EventStartDate'], 'Event Start Date' );
+				write_log( $data['EventTimezone'], 'Event Timezone' );
+				write_log( Tribe__Events__Timezones::abbr( $data['EventStartDate'], $data['EventTimezone'] ), 'Method Value' );
+
 				$data['EventTimezoneAbbr'] = Tribe__Events__Timezones::abbr( $data['EventStartDate'], $data['EventTimezone'] );
 			}
 

@@ -82,11 +82,16 @@ class Tribe__Events__Timezones extends Tribe__Timezones {
 	public static function get_event_timezone_abbr( $event_id = null ) {
 		$abbr = get_post_meta( $event_id, '_EventTimezoneAbbr', true );
 
+		write_log( $event_id, 'EVENT ID FROM WITHIN FUNCTION' );
+		write_log( $abbr, 'ABBR META' );
+
 		if ( empty( $abbr ) ) {
 			$timezone_string = self::get_event_timezone_string( $event_id );
-			$date = tribe_get_start_date( $event_id, true, Tribe__Date_Utils::DBDATETIMEFORMAT );
-			$abbr = self::abbr( $date, $timezone_string );
+			$date            = tribe_get_start_date( $event_id, true, Tribe__Date_Utils::DBDATETIMEFORMAT );
+			$abbr            = self::abbr( $date, $timezone_string );
 		}
+
+		write_log( tribe_get_start_date( $event_id, true, Tribe__Date_Utils::DBDATETIMEFORMAT ), 'FRESH START DATE' );
 
 		return empty( $abbr )
 			? $timezone_string
@@ -164,6 +169,7 @@ class Tribe__Events__Timezones extends Tribe__Timezones {
 			: $timezone;
 
 		$localized = self::to_tz( $datetime, $tzstring );
+
 		return strtotime( $localized );
 	}
 
